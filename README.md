@@ -5,11 +5,12 @@ Still experimental -- contact anil@recoil.org if you want help.
 ## Installation
 
 Assuming you have a `/usr/local`
+Note the reversal of make install and make
 
 ```
 $ git clone git://github.com/avsm/docker-ssh-agent-forward
-$ make
 $ make install
+$ make
 ```
 
 On every boot, do:
