@@ -38,6 +38,7 @@ Connection to github.com closed.
 
 ## Contributors
 
+* Faye Salwin
 * Justin Cormack
 
 [License](LICENSE.md) is ISC.
