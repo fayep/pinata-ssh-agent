@@ -1,6 +1,6 @@
 Forward SSH agent socket into a container
 
-Still experimental -- contact anil@recoil.org if you want help.
+Still experimental -- contact faye@futureadvisor.com if you want help.
 
 ## Installation
 
@@ -8,7 +8,7 @@ Assuming you have a `/usr/local`
 Note the reversal of make install and make
 
 ```
-$ git clone git://github.com/avsm/docker-ssh-agent-forward
+$ git clone git://github.com/FutureAdvisor/pinata-ssh-agent
 $ make install
 $ make
 ```
