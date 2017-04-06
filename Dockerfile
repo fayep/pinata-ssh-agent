@@ -1,5 +1,5 @@
-FROM alpine
-MAINTAINER Anil Madhavapeddy <anil@recoil.org>
+FROM alpine:3.5
+MAINTAINER Faye Salwin <faye.salwin@futureadvisor.com>
 RUN apk update && apk add openssh && \
     apk add --update --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ tini
 RUN mkdir /root/.ssh && \
@@ -8,5 +8,5 @@ RUN mkdir /root/.ssh && \
 COPY ssh-find-agent.sh /root/ssh-find-agent.sh
 EXPOSE 22
 VOLUME ["/root/.ssh/authorized_keys"]
-ENTRYPOINT ["/usr/bin/tini","--"]
+ENTRYPOINT ["/sbin/tini","--"]
 CMD ["/usr/sbin/sshd","-D"]
