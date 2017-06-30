@@ -1,8 +1,18 @@
 #!/bin/sh -e
 
+home=$HOME
+if [ -n "$USERPROFILE" ]; then
+  # We're in Windows - USERPROFILE is set to the value of %USERPROFILE% but converted to WSL path
+  if [ ! -L "${HOME}/.ssh" ]; then
+    mkdir -p $USERPROFILE/.ssh
+    for file in $(find ~/.ssh -type f | sed "s~${HOME}.~~g"); do cp ~/$file $USERPROFILE/$file; done
+  fi
+  home=$USERPROFILE
+fi
+
 IMAGE_NAME=pinata-sshd
 CONTAINER_NAME=pinata-sshd
-LOCAL_STATE=~/.pinata-sshd
+LOCAL_STATE=$home/.pinata-sshd
 LOCAL_PORT=2244
 
 docker rm -f ${CONTAINER_NAME} >/dev/null 2>&1 || true
@@ -10,8 +20,9 @@ rm -rf ${LOCAL_STATE}
 mkdir -p ${LOCAL_STATE}
 
 docker run --name ${CONTAINER_NAME} \
-  -v ~/.ssh/id_rsa.pub:/root/.ssh/authorized_keys \
-  -v ${LOCAL_STATE}:/tmp \
+  -v $home/.ssh/id_rsa.pub:/root/.ssh/authorized_keys \
+  -v ${LOCAL_STATE}:/share \
+  -v /tmp:/tmp \
   -d -p ${LOCAL_PORT}:22 ${IMAGE_NAME} > /dev/null
 
 IP=`docker inspect --format '{{(index (index .NetworkSettings.Ports "22/tcp") 0).HostIp }}' ${CONTAINER_NAME}`
