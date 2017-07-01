@@ -36,6 +36,12 @@ Hi avsm! You've successfully authenticated, but GitHub does not provide shell ac
 Connection to github.com closed.
 ```
 
+### Known issue
+
+Originally this put the socket on the host but now it's stored on the docker VM itself which makes more sense.  The trouble is that because it's created in a container with root permissions, it creates the socket with root permissions, which means if you use it in a container running as a user, you get "unable to access auth socket".  ie. the case above fails.
+
+That same container supports sudo, so a sudo chown opam $SSH_AUTH_SOCK run inside that container magically makes the auth work as the delegated user.  The effect in the docker linux vm is that the owner is now dockrema.  Basically I need to make that happen automatically.
+
 ## Additional Programs
 
 Included in this bundle is an ssh-agent wrapper which works even if your shells aren't children of the ssh-agent environment.  This is particularly useful in Windows.  To make ssh-agent available in your shell, just

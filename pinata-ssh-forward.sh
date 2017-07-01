@@ -23,7 +23,7 @@ docker run --name ${CONTAINER_NAME} \
   -v $home/.ssh/id_rsa.pub:/root/.ssh/authorized_keys \
   -v ${LOCAL_STATE}:/share \
   -v /tmp:/tmp \
-  -d -p ${LOCAL_PORT}:22 ${IMAGE_NAME} > /dev/null
+  -d -p ${LOCAL_PORT}:22 --init ${IMAGE_NAME} > /dev/null
 
 IP=`docker inspect --format '{{(index (index .NetworkSettings.Ports "22/tcp") 0).HostIp }}' ${CONTAINER_NAME}`
 ssh-keyscan -p ${LOCAL_PORT} ${IP} > ${LOCAL_STATE}/known_hosts 2>/dev/null
