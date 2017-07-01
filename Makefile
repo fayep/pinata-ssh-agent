@@ -15,3 +15,4 @@ install:
 	cp pinata-build-sshd.sh $(BINDIR)/pinata-build-sshd
 	cp pinata-ssh-forward.sh $(BINDIR)/pinata-ssh-forward
 	cp pinata-ssh-mount.sh $(BINDIR)/pinata-ssh-mount
+	cp ssh-agent-wrap.sh $(BINDIR)/ssh-agent-wrap
